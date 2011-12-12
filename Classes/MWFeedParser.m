@@ -679,6 +679,15 @@
 			}
 			default: break;
 		}
+        
+        //if delegate responds to custom paths call it
+        if ([self.delegate respondsToSelector:@selector(feedParser:parseElementAtPath:attributes:text:item:)]) {
+            item = [self.delegate feedParser:self
+                          parseElementAtPath:currentPath
+                                  attributes:currentElementAttributes
+                                        text:processedText
+                                        item:item];
+        }
 	}
 	
 	// Adjust path

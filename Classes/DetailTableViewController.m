@@ -29,8 +29,9 @@
 
 #import "DetailTableViewController.h"
 #import "NSString+HTML.h"
+#import "MWFeedItem+Custom.h"
 
-typedef enum { SectionHeader, SectionDetail } Sections;
+typedef enum { SectionHeader, SectionDetail, SectionCustom } Sections;
 typedef enum { SectionHeaderTitle, SectionHeaderDate, SectionHeaderURL } HeaderRows;
 typedef enum { SectionDetailSummary } DetailRows;
 
@@ -79,7 +80,7 @@ typedef enum { SectionDetailSummary } DetailRows;
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
-    return 2;
+    return 3;
 }
 
 
@@ -140,6 +141,11 @@ typedef enum { SectionDetailSummary } DetailRows;
 				break;
 				
 			}
+            case SectionCustom: {
+                cell.textLabel.text = item.custom;
+                cell.textLabel.numberOfLines = 0;
+                break;
+            }
 		}
 	}
     
@@ -153,7 +159,7 @@ typedef enum { SectionDetailSummary } DetailRows;
 		// Regular
 		return 34;
 		
-	} else {
+	} else if (indexPath.section == SectionDetail) {
 		
 		// Get height of summary
 		NSString *summary = @"[No Summary]";
@@ -163,7 +169,11 @@ typedef enum { SectionDetailSummary } DetailRows;
 						   lineBreakMode:UILineBreakModeWordWrap];
 		return s.height + 16; // Add padding
 		
-	}
+	} else if (indexPath.section == SectionCustom) {
+        return 34.0;
+    } else {
+        return 34.0;
+    }
 }
 
 #pragma mark -

@@ -31,6 +31,7 @@
 #import "NSString+HTML.h"
 #import "MWFeedParser.h"
 #import "DetailTableViewController.h"
+#import "MWFeedItem+Custom.h"
 
 @implementation RootViewController
 
@@ -124,6 +125,20 @@
         [alert show];
     }
     [self updateTableWithParsedItems];
+}
+
+- (MWFeedItem *)feedParser:(MWFeedParser *)parser parseElementAtPath:(NSString *)path 
+                attributes:(NSDictionary *)attributes 
+                      text:(NSString *)text 
+                      item:(MWFeedItem *)item
+{
+    if ([path isEqualToString:@"/rss/channel/item/pubDate"]) {
+        //this is a property added to a category
+        item.custom = text;
+    }
+    //return the edited item, so you can return a new item here. e.g. a subclass
+    //of MWFeedItem that does whatever you want.
+    return item;
 }
 
 #pragma mark -

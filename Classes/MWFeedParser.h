@@ -62,6 +62,13 @@ typedef enum { FeedTypeUnknown, FeedTypeRSS, FeedTypeRSS1, FeedTypeAtom } FeedTy
 - (void)feedParser:(MWFeedParser *)parser didParseFeedItem:(MWFeedItem *)item;
 - (void)feedParserDidFinish:(MWFeedParser *)parser;
 - (void)feedParser:(MWFeedParser *)parser didFailWithError:(NSError *)error;
+
+//custom entries
+- (MWFeedItem*)feedParser:(MWFeedParser *)parser parseElementAtPath:(NSString*)path 
+               attributes:(NSDictionary*)attributes 
+                     text:(NSString*)text
+                     item:(MWFeedItem*)item;
+
 @end
 
 // MWFeedParser
