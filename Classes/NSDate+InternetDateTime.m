@@ -43,6 +43,13 @@ static NSDateFormatter *_internetDateTimeFormatter = nil;
             date = [NSDate dateFromRFC3339String:dateString];
             if (!date) date = [NSDate dateFromRFC822String:dateString];
         }
+        if (!date) {
+            //fallback to default NSDate date
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss Z"];
+            date = [dateFormatter dateFromString:dateString];
+            [dateFormatter release];
+        }
     }
     [dateString release]; // Finished with date string
 	return date;
